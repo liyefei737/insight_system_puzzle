@@ -26,6 +26,6 @@ As the developer mentioned, the app will run on port 8080 on localhost. I need t
 
 To do that I fix the port mapping of the nginix service in docker-compose.yml to use "8080:80" instead of "80:8080"(this maps host port 80 to nginix container port 8080 which is not what we want). 
 
-Another bug I found is in the nginix config file is that, the proxy(ngnix) passes requests to port 5001 of the web server. Since the developer did not set the port for the flask web server to 5001, the web server will listen to port 5000 only(the default port). To connect them properly, I made it explicit in the web server to use port 5000 and updated the nginix config file to pass requests to port 5000 on the web server.
+Another bug I found is in the nginix config file is that, the proxy(ngnix) passes requests to port 5001 of the web server. That is not what the webserver listens to. Since the developer did not set the port for the flask web server, it will listen to port 5000(the default port). To connect them properly, I made it explicit in the web server to use port 5000 and updated the nginix config file to pass requests to port 5000 on the web server.
 
 The app now shows up correctly in my browser with the url localhost:8080. But it doesn't show all items added so far after a client enters a new item. (This seems to be the intention of the developer as she/he made a query to get all items). I added some code to loop over the query result and made the server to return all items in a list. 
